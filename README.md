@@ -3,6 +3,8 @@
 
 #  `rcwm (alpha)`
 
+     Is in development, currently not working
+
 
 <h3>
   Fast and practical X11 window manager, written in <code>nim👑</code>
