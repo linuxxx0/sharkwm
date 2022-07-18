@@ -1,21 +1,9 @@
 # rcwm is a light, fast and easy to use window manager
 #
-#          __            __  _      ____  ___
+#         __            __  _      ____  ___
 #    ___ / /  ___ _____/ /_| | /| / /  |/  /
 #   (_-</ _ \/ _ `/ __/  '_/ |/ |/ / /|_/ /
 #  /___/_//_/\_,_/_/ /_/\_\|__/|__/_/  /_/
-
-
-
-
-                                         
-
-
-
-
-
-
-
 
 import
   std/options, os, sequtils, strutils, parsecfg,
