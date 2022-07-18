@@ -1,5 +1,6 @@
 # sharkwm is a light, fast and easy to use window manager
 #
+# Warning: This file should not be edited, it might cause problems with the window manager
 #         __            __  _      ____  ___
 #    ___ / /  ___ _____/ /_| | /| / /  |/  /
 #   (_-</ _ \/ _ `/ __/  '_/ |/ |/ / /|_/ /
@@ -35,8 +36,8 @@ let
   eventMask = ButtonPressMask or KeyPressMask or ExposureMask
 
 let
-    Xscreen = XDefaultScreen(display)
-    XrootWind = XRootWindow(display, screen)
+  Xscreen = XDefaultScreen(display)
+  XrootWind = XRootWindow(display, screen)
 
 proc getDistro*(): string =
   let
