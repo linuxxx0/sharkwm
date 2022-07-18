@@ -1,7 +1,7 @@
 <div align="center">
   
 
-#  `rcwm (alpha)`
+#  `sharkwm(alpha)`
 
      Is in development, currently not working
 
@@ -13,7 +13,7 @@
 </div align="center">
   
 # Description ⚡️
-`rcwm` is a fast and convenient window manager with two modes: tiling and floating. This window manager is positioned as wm without backward compatibility, that is, everything that our users find unnecessary we remove.
+`sharkwm` is a fast and convenient window manager with two modes: tiling and floating. This window manager is positioned as wm without backward compatibility, that is, everything that our users find unnecessary we remove.
 It has only the most necessary functions, everything else will be finished over time.
 
 # Dependencies 🔍
@@ -36,8 +36,8 @@ sudo dnf install make libX11-devel
 ```
 # Installation WM 🔨
 ```fish
-git clone https://github.com/linuxxx0/rcwm
-cd rcwm
+git clone https://github.com/linuxxx0/sharkwm
+cd sharkwm
 sudo make clean install
-vim .xinitrc >> exec rcwm
+vim .xinitrc >> exec sharkwm
 ```
