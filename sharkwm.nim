@@ -17,18 +17,23 @@ import
 converter toXBool*(x: bool): XBool = x.XBool,
 converter toBool*(x: XBool): bool = x.bool,
 
-proc pass =
-  discard
+proc getResolution(): string =
+  const
+    Resulution: Config = loadConfig("xrandr -d :0")
 
-type Bar = object
+  result = Resulution.getSectionValue("", "current")
 
-type XWindInfo = object
-  display*: PDisplay
-  attr*: TXWindowAttributes
-  start*: TXButtonEvent
-  ev*: TXEvent
+let
+  windowWidth =  getResolution(getResolution.getSectionValue("x", ""))
+  windowHeight = getResolution(getResolution.getSectionValue("", "x"))
+  borderWidth = 5
+  eventMask = ButtonPressMask or KeyPressMask or ExposureMask
 
-proc initXWindInfo(windInfo var XWindInfo): XWindInfo =
+let
+    Xscreen = XDefaultScreen(display)
+    XrootWind = XRootWindow(display, screen)
+
+proc initXWindInfo() =
   display = XOpenDisplay(nil)
   if display == nil:
     quit "I can't see your display"
