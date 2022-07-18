@@ -4,8 +4,8 @@
 
 
 <h3>
-  Fast and practical X11 window manager, written in <code>nim👑</code> and <code>C🦾</code>
-</h3>
+  Fast and practical X11 window manager, written in <code>nim👑</code>
+  </h3>
 <br>
 
 # Description ⚡️
