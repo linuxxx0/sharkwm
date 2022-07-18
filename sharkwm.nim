@@ -17,6 +17,11 @@ import
 converter toXBool*(x: bool): XBool = x.XBool,
 converter toBool*(x: XBool): bool = x.bool,
 
+proc initXWindInfo() =
+  display = XOpenDisplay(nil)
+  if display == nil:
+    quit "I can't see your display"
+
 proc getResolution(): string =
   const
     Resulution: Config = loadConfig("xrandr -d :0")
@@ -32,11 +37,6 @@ let
 let
     Xscreen = XDefaultScreen(display)
     XrootWind = XRootWindow(display, screen)
-
-proc initXWindInfo() =
-  display = XOpenDisplay(nil)
-  if display == nil:
-    quit "I can't see your display"
 
 proc getDistro*(): string =
   let
