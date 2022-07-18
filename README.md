@@ -19,6 +19,8 @@ It has only the most necessary functions, everything else will be finished over 
 # Dependencies 🔍
 `libx11` to work
 
+`xorg` to work
+
 `make` to build
 
 # Dependencies install ⚙️
