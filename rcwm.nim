@@ -22,13 +22,13 @@ proc getResolution*(): string =
 
   result = Resulution.getSectionValue("", "current")
 
-proc getDistroId*(): string =
+proc getDistro*(): string =
   let
     osRelease: Config = loadConfig("/etc/os-release")
 
   result = osRelease.getSectionValue("", "ID")
 
-proc getRam*(): string =
+proc getMemory*(): string =
   let
      fileSeq: seq[string] = readLines("/proc/meminfo", 3)
 
