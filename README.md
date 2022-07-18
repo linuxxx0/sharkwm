@@ -34,7 +34,7 @@ sudo apt install make libx11-dev
 ```fish
 sudo dnf install make libX11-devel
 ```
-# Installation WM
+# Installation WM 🔨
 ```fish
 git clone https://github.com/linuxxx0/rcwm
 cd rcwm
