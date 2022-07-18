@@ -42,3 +42,9 @@ proc getMemory*(): string =
      memUsedInt: int = memTotalInt - memAvailableInt
 
    result = $(memUsedInt) & " | " & $(memTotalInt) & " MiB"
+
+proc getWM*(): string =
+  let
+    wmId: Config = loadConfig("/etc/X11/xinit/xinitrc")
+
+   result = wmId.getSectionValue("", "exec")
