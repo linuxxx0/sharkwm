@@ -96,7 +96,6 @@ proc drawWindow() =
 
 
 proc mainLoop() =
-  ## Process events until the quit event is received
   var event: XEvent
   while true:
     discard XNextEvent(display, event.addr)
