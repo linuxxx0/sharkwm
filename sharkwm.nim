@@ -9,7 +9,7 @@
 import
     x11/xlib,
     x11/xutil,
-    import
+import
     std/parsecfg,
     std/strutilsaa
 
