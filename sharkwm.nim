@@ -9,59 +9,119 @@
 import
     x11/xlib,
     x11/xutil,
-    x11/x
-
-import
+    import
     std/parsecfg,
-    std/strutils
+    std/strutilsaa
 
-converter toXBool*(x: bool): XBool = x.XBool,
+conve:InstallLspServer vimrter toXBool*(x: bool): XBool = x.XBool,
 converter toBool*(x: XBool): bool = x.bool,
+var
+  display: PDisplay
+  screen: cint
+  depth: int
+  win: Window
+  sizeHints: XSizeHints
+  wmDeleteMessage: Atom
+  running: bool
+  xev: XEvent
+  displayString = "Hello, Nimrods."
+  fontName = "monospace:size=10"
+  font: PXftFont
+  xftDraw: PXftDraw
+  xftColor: XftColorvar
+  width, height: cuint
+  display: PDisplay
+  screen: cint
+  depth: int
+  win: Window
+  sizeHints: XSizeHints
+  wmDeleteMessage: Atom
+  running: bool
+  xev: XEvent
+  displayString = "Hello."
+  fontName = "monospace:size=10"
+  font: PXftFont
+  xftDraw: PXftDraw
+  xftColor: XftColor
+  graphicsContext: GC
 
-proc initXWindInfo() =
-  display = XOpenDisplay(nil)
-  if display == nil:
-    quit "I can't see your display"
+  proc getResolution(): string =
+    const
+      Resulution: Config = loadConfig("xrandr -d :0")
 
-proc getResolution(): string =
-  const
-    Resulution: Config = loadConfig("xrandr -d :0")
+    result = Resulution.getSectionValue("", "current")
 
-  result = Resulution.getSectionValue("", "current")
-
-let
-  windowWidth =  getResolution(getResolution.getSectionValue("x", ""))
-  windowHeight = getResolution(getResolution.getSectionValue("", "x"))
-  borderWidth = 5
-  eventMask = ButtonPressMask or KeyPressMask or ExposureMask
-
-let
-  Xscreen = XDefaultScreen(display)
-  XrootWind = XRootWindow(display, screen)
-
-proc getDistro*(): string =
   let
-    osRelease: Config = loadConfig("/etc/os-release")
-
-  result = osRelease.getSectionValue("", "ID")
-
-proc getMemory*(): string =
-  let
-     fileSeq: seq[string] = readLines("/proc/meminfo", 3)
+    XwindWidth =  getResolution(getResolution.getSectionValue("x", ""))
+    XwindHeight = getResolution(getResolution.getSectionValue("", "x"))
+    XbordWidth = 5
+    eventMask = ButtonPressMask or KeyPressMask or ExposureMask
 
   let
-    memTotalSeq: seq[string] = fileSeq[0].split(" ")
-    memAvailableSeq: seq[string] = fileSeq[2].split(" ")
+    Xscreen = XDefaultScreen(display)
+    XrootWind = XRootWindow(display, screen)
+    topColor = XBlackPixel(display, screen)
+    backColor = XWhitePixel(display, screen)
 
-    memTotalInt: int = parseInt(memTotalSeq[^2]) div 1024
-    memAvailableInt: int = parseInt(memAvailableSeq[^2]) div 1024
+  proc create_window = 
+    width = XwindWidth
+    height = XwindHeight
 
-    memUsedInt: int = memTotalInt - memAvailableInt
+    display = XOpenDisplay(nil)
+    if display == nil:
+      quit "I dont see a display"  
 
-  result = $(memUsedInt) & " | " & $(memTotalInt) & " MiB"
+    window = XCreateSimpleWindow(display, rootWindow, -1, -1, windowWidth,
+    windowHeight, borderWidth, foregroundColor, backgroundColor)
 
-proc getWM*(): string =
-  let
-    wmId: Config = loadConfig("/etc/X11/xinit/xinitrc")
+    font = XftFontOpenName(display, screen, fontName)
+    if font == nil:
+      quit "Failed to load font"
 
-   result = wmId.getSectionValue("", "exec")
+  discard XSetStandardProperties(display, window, "X11 Example", "window", 0,
+      nil, 0, nil)
+
+  discard XSelectInput(display, window, eventMask)
+  discard XMapWindow(display, window)
+
+  deleteMessage = XInternAtom(display, "WM_DELETE_WINDOW", false.XBool)
+  discard XSetWMProtocols(display, window, deleteMessage.addr, 1)
+
+  graphicsContext = XDefaultGC(display, screen)
+
+
+proc drawWindow() =
+  const text = ""
+  discard XDrawString(display, window, graphicsContext, 10, 50, text, text.len)
+
+
+proc mainLoop() =
+  ## Process events until the quit event is received
+  var event: XEvent
+  while true:
+    discard XNextEvent(display, event.addr)
+    case event.theType
+    of Expose:
+      drawWindow()
+    of ClientMessage:
+      if cast[Atom](event.xclient.data.l[0]) == deleteMessage:
+        break
+    of KeyPress:
+      let key = XLookupKeysym(cast[PXKeyEvent](event.addr), 0)
+      if key != 0:
+        echo "Key ", key, " pressed"
+    of ButtonPressMask:
+      echo "Mouse button ", event.xbutton.button, " pressed at ",
+          event.xbutton.x, ",", event.xbutton.y
+    else:
+      discard
+
+
+proc main() =
+  init()
+  mainLoop()
+  discard XDestroyWindow(display, window)
+  discard XCloseDisplay(display)
+
+
+main()
