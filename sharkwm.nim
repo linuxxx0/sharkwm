@@ -9,11 +9,11 @@
 import
     x11/xlib,
     x11/xutil,
-import
+    import
     std/parsecfg,
     std/strutilsaa
 
-conve:InstallLspServer vimrter toXBool*(x: bool): XBool = x.XBool,
+converter InstallLspServer vimrter toXBool*(x: bool): XBool = x.XBool,
 converter toBool*(x: XBool): bool = x.bool,
 var
   display: PDisplay
@@ -33,9 +33,9 @@ var
   display: PDisplay
   screen: cint
   depth: int
-  win: Window
+  window: Window
   sizeHints: XSizeHints
-  wmDeleteMessage: Atom
+  DeleteMessage: Atom
   running: bool
   xev: XEvent
   displayString = "Hello."
@@ -71,8 +71,8 @@ var
     if display == nil:
       quit "I dont see a display"  
 
-    window = XCreateSimpleWindow(display, rootWindow, -1, -1, windowWidth,
-    windowHeight, borderWidth, foregroundColor, backgroundColor)
+    window = XCreateSimpleWindow(display, XrootWindow, -1, -1, XwindowWidth,
+    XwindowHeight, XborderWidth, topColor, backColor)
 
     font = XftFontOpenName(display, screen, fontName)
     if font == nil:
