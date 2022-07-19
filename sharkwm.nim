@@ -35,7 +35,7 @@ var
   depth: int
   window: Window
   sizeHints: XSizeHints
-  DeleteMessage: Atom
+  deleteMessage: Atom
   running: bool
   xev: XEvent
   displayString = "Hello."
