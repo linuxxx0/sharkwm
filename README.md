@@ -26,15 +26,15 @@ It has only the most necessary functions, everything else will be finished over 
 # Dependencies install ⚙️
 ### to Arch based distro<img src="https://wiki.installgentoo.com/images/f/f9/Arch-linux-logo.png?raw=true" width="20px">
 ```fish
-sudo pacman -Syu make libx11
+sudo pacman -Syu make libx11 xorg
 ```
 ### to Debian based distro<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Openlogo-debianV2.svg/1200px-Openlogo-debianV2.svg.png?raw=true" width="20px"> 
 ```fish
-sudo apt install make libx11-dev 
+sudo apt install make libx11-dev xorg
 ```
 ### to Rpm based distro<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Fedora_logo.svg/1024px-Fedora_logo.svg.png?raw=true" width="20px">
 ```fish
-sudo dnf install make libX11-devel
+sudo dnf install make libX11-devel xorg
 ```
 # Installation WM 🔨
 ```fish
